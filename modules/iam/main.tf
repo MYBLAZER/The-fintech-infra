@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-2"
 }
 
 # IAM Role for GitHub Actions
@@ -37,7 +37,7 @@ resource "aws_iam_openid_connect_provider" "github_oidc" {
   ]
 
   thumbprint_list = [
-    "6938fd4d98bab03faadb97b34396831e3780aea1"  # ✅ GitHub's official OIDC thumbprint
+    "6938fd4d98bab03faadb97b34396831e3780aea1" # ✅ GitHub's official OIDC thumbprint
   ]
 }
 
@@ -50,8 +50,8 @@ resource "aws_iam_policy" "github_ecr_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Action = "ecr:GetAuthorizationToken"
+        Effect   = "Allow"
+        Action   = "ecr:GetAuthorizationToken"
         Resource = "*"
       },
       {
@@ -79,8 +79,8 @@ resource "aws_iam_policy" "github_ecr_policy" {
       },
       # Allow GitHub Actions to assume the role correctly
       {
-        Effect = "Allow"
-        Action = "sts:TagSession"
+        Effect   = "Allow"
+        Action   = "sts:TagSession"
         Resource = "*"
       }
     ]
@@ -92,7 +92,7 @@ resource "aws_iam_policy" "github_ecr_policy" {
 resource "aws_iam_policy" "github_eks_policy" {
   name        = "${var.environment}-GitHubEKSPolicy"
   description = "Permissions for GitHub Actions to deploy to EKS"
-  policy      = jsonencode({
+  policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {

@@ -4,7 +4,7 @@ set -euo pipefail
 ### 1) kubectl client
 echo "Installing kubectl..."
 curl -fsSL -o kubectl \
-  https://s3.us-west-2.amazonaws.com/amazon-eks/1.27.12/2024-04-19/bin/linux/amd64/kubectl
+  https://s3.us-east-2.amazonaws.com/amazon-eks/1.27.12/2024-04-19/bin/linux/amd64/kubectl
 chmod +x kubectl
 mkdir -p "$HOME/bin"
 mv kubectl "$HOME/bin/"
@@ -118,7 +118,7 @@ echo "Configuring Nginx reverse proxy for SonarQube..."
 sudo tee /etc/nginx/sites-available/sonarqube.conf > /dev/null <<'EOF'
 server {
     listen 80;
-    server_name sonarqube.dominionsystem.org;
+    server_name sonarqube.azwetech01.org;
 
     location / {
         proxy_pass http://localhost:9000;
@@ -138,16 +138,16 @@ sudo ln -sf /etc/nginx/sites-available/sonarqube.conf /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 
-echo "Obtaining SSL certificate for sonarqube.dominionsystem.org..."
+echo "Obtaining SSL certificate for sonarqube.azwetech01.org..."
 sudo certbot --nginx --non-interactive --agree-tos \
-  --email fusisoft@gmail.com \
-  -d sonarqube.dominionsystem.org
+  --email rachealazwe@gmail.com \
+  -d sonarqube.azwetech01.org
 
 echo "Scheduling daily certificate renewal..."
 sudo bash -c 'echo "0 0 * * * root certbot renew --quiet" >> /etc/crontab'
 
 sudo systemctl reload nginx
 
-echo "✅ Setup complete! Access SonarQube at: https://sonarqube.dominionsystem.org"
+echo "✅ Setup complete! Access SonarQube at: https://sonarqube.azwetech01.org"
 
 
