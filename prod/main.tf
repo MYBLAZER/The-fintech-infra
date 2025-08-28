@@ -12,7 +12,7 @@ module "vpc" {
 # ################################################################################
 
 module "eks" {
-  source             = "./../modules/eks-cluster"
+  source             = "./modules/eks-cluster"
   cluster_name       = var.cluster_name
   rolearn            = var.rolearn
   security_group_ids = [module.eks-client-node.eks_client_sg]
@@ -25,7 +25,7 @@ module "eks" {
 # ################################################################################
 
 module "aws_alb_controller" {
-  source = "./../modules/aws-alb-controller"
+  source = "./modules/aws-alb-controller"
 
   main-region  = var.main-region
   env_name     = var.env_name
@@ -37,7 +37,7 @@ module "aws_alb_controller" {
 
 
 module "eks-client-node" {
-  source                 = "./../modules/eks-client-node"
+  source                 = "./modules/eks-client-node"
   ami_id                 = local.final_ami_id
   instance_type          = var.instance_type
   aws_region             = var.main-region
@@ -75,7 +75,7 @@ module "eks-client-node" {
   apt-get install -y terraform
 
   echo "Installing kubectl..."
-  curl -LO https://s3.us-east-2.amazonaws.com/amazon-eks/1.31.3/2024-12-12/bin/linux/amd64/kubectl
+  curl -LO https://s3.us-east-1.amazonaws.com/amazon-eks/1.31.3/2024-12-12/bin/linux/amd64/kubectl
   install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
   echo "Installing Docker CE..."

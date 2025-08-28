@@ -3,7 +3,7 @@
 # ################################################################################
 
 module "vpc" {
-  source      = "./../modules/vpc"
+  source      = "./modules/vpc"
   main-region = var.main-region
 }
 
@@ -12,7 +12,7 @@ module "vpc" {
 # ################################################################################
 
 module "eks" {
-  source             = "./../modules/eks-cluster"
+  source             = "./modules/eks-cluster"
   cluster_name       = var.cluster_name
   rolearn            = var.rolearn
   security_group_ids = [module.eks-client-node.eks_client_sg]
@@ -25,7 +25,7 @@ module "eks" {
 # ################################################################################
 
 module "aws_alb_controller" {
-  source = "./../modules/aws-alb-controller"
+  source = "./modules/aws-alb-controller"
 
   main-region  = var.main-region
   env_name     = var.env_name
@@ -37,7 +37,7 @@ module "aws_alb_controller" {
 
 
 module "eks-client-node" {
-  source                 = "./../modules/eks-client-node"
+  source                 = "./modules/eks-client-node"
   ami_id                 = local.final_ami_id
   instance_type          = var.instance_type
   aws_region             = var.main-region
@@ -69,7 +69,7 @@ module "eks-client-node" {
     sudo apt-get install -y terraform
 
     echo "Installing kubectl for Amazon EKS..."
-    curl -O https://s3.us-east-2.amazonaws.com/amazon-eks/1.31.3/2024-12-12/bin/linux/amd64/kubectl
+    curl -O https://s3.us-east-1.amazonaws.com/amazon-eks/1.31.3/2024-12-12/bin/linux/amd64/kubectl
     chmod +x ./kubectl
     mkdir -p "$HOME/bin"
     cp ./kubectl "$HOME/bin/kubectl"
@@ -102,7 +102,7 @@ module "eks-client-node" {
 
 
 module "acm" {
-  source          = "./../modules/acm"
+  source          = "./modules/acm"
   domain_name     = var.domain_name
   san_domains     = var.san_domains
   route53_zone_id = var.route53_zone_id
@@ -111,7 +111,7 @@ module "acm" {
 
 
 module "ecr" {
-  source         = "./../modules/ecr"
+  source         = "./modules/ecr"
   aws_account_id = var.aws_account_id
   repositories   = var.repositories
   tags           = local.common_tags
@@ -119,7 +119,7 @@ module "ecr" {
 
 
 module "iam" {
-  source      = "./../modules/iam"
+  source      = "./modules/iam"
   environment = var.env_name
   tags        = local.common_tags
 }
@@ -129,7 +129,7 @@ module "iam" {
 # EKS TOOLS
 ##############################################
 module "jenkins-server" {
-  source            = "./../modules/jenkins-server"
+  source            = "./modules/jenkins-server"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name
@@ -140,7 +140,7 @@ module "jenkins-server" {
 
 
 module "terraform-node" {
-  source            = "./../modules/terraform-node"
+  source            = "./modules/terraform-node"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name
@@ -150,7 +150,7 @@ module "terraform-node" {
 }
 
 module "maven-sonarqube-server" {
-  source            = "./../modules/maven-sonarqube-server"
+  source            = "./modules/maven-sonarqube-server"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name
