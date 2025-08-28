@@ -16,10 +16,10 @@ variable "instance_type" {
 variable "key_name" {
   description = "The key name for the Jenkins server"
   type        = string
-  default     = "DevOps_Train2024"
+  default     = "DevOps_Train2025" #"DevOps_Train2024"
 }
 
-variable "main-region" {
+variable "main_region" {
   description = "The AWS region to deploy resources"
   type        = string
   default     = "us-east-2"

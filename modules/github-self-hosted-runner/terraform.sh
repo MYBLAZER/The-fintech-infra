@@ -29,9 +29,6 @@ sudo apt-get install terraform -y
 
 #Installing kubectl client
 curl -O https://s3.us-east-1.amazonaws.com/amazon-eks/1.27.12/2024-04-19/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH 
-
 
 ### Docker cleanup & install
 echo "Removing older Docker versions if installed..."
@@ -67,7 +64,7 @@ sudo systemctl enable docker
 sudo systemctl start docker
 
 echo "Adding current user ($USER) to the Docker group..."
-sudo usermod -aG docker "$USER"
+sudo usermod -aG docker ubuntu
 newgrp docker
 echo "Docker installation complete."
 
@@ -76,18 +73,19 @@ sudo apt update
 sudo apt install -y wget tar git openjdk-17-jdk
 
 # Define Maven version
-MAVEN_VERSION=3.9.6
+MAVEN_VERSION=3.9.10
 MAVEN_DIR=/opt/maven
 MAVEN_ARCHIVE=apache-maven-$MAVEN_VERSION-bin.tar.gz
-
+             
 # Download and extract Maven
-wget https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/$MAVEN_ARCHIVE -P /tmp
+wget https://dlcdn.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/$MAVEN_ARCHIVE -P /tmp
+    
 sudo mkdir -p $MAVEN_DIR
 sudo tar -xzf /tmp/$MAVEN_ARCHIVE -C $MAVEN_DIR
-sudo ln -s $MAVEN_DIR/apache-maven-$MAVEN_VERSION /opt/maven/latest
+
 
 # Set environment variables
-echo "export M2_HOME=/opt/maven/latest" | sudo tee /etc/profile.d/maven.sh
+echo "export M2_HOME=/opt/maven/apache-maven-3.9.10" | sudo tee /etc/profile.d/maven.sh
 echo "export PATH=\$M2_HOME/bin:\$PATH" | sudo tee -a /etc/profile.d/maven.sh
 
 # Apply env vars immediately

@@ -18,7 +18,6 @@ provider "kubernetes" {
   }
 }
 
-
 ##############################################
 # EKS Control Plane + Node Groups + Add-ons
 ##############################################
@@ -29,7 +28,6 @@ module "eks" {
 
   cluster_name    = var.cluster_name
   cluster_version = "1.32"
-
   enable_cluster_creator_admin_permissions = true
   cluster_endpoint_public_access           = true
 
@@ -106,7 +104,7 @@ module "eks" {
   # Access entries (IAM Identity Center or user/role mapping)
   ##############################################
   access_entries = {
-    azwe = {
+    azwe = { 
       kubernetes_groups = ["eks-admins"]
       principal_arn     = "arn:aws:iam::514670561567:user/azwe"
       policy_associations = [

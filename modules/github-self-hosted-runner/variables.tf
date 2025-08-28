@@ -1,7 +1,7 @@
 variable "ami_id" {
   description = "The AMI ID for the Terraform node"
   type        = string
-  default     = "ami-0d1b5a8c13042c939" #"ami-03c983f9003cb9cd1"         # Default AMI for us-east-2, update as needed
+  default     = "ami-0bbdd8c17ed981ef9" #ami-03c983f9003cb9cd1"
 }
 
 variable "instance_type" {
@@ -13,10 +13,10 @@ variable "instance_type" {
 variable "key_name" {
   description = "The key name for the Jenkins server"
   type        = string
-  default     = "DevOps_Train2024"
+  default     = "DevOps_Train2025" #"DevOps_Train2024"
 }
 
-variable "main-region" {
+variable "main_region" {
   description = "The AWS region to deploy resources"
   type        = string
   default     = "us-east-2"

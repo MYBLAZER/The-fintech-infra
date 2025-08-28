@@ -27,8 +27,29 @@ variable "security_group_ids" {
 # Variables defined using Environment Variables
 ################################################################################
 
+
 variable "rolearn" {
-  description = "Add admin role to the aws-auth configmap"
+  description = "IAM Role for admin access to the EKS cluster"
+  type        = string
+}
+
+variable "cni_role_arn" {
+  description = "IAM Role for vpc-cni addon"
+  type        = string
+}
+
+variable "tags" {
+  description = "Common tags for the cluster resources"
+  type        = map(string)
+  default = {
+    product   = "eks-cluster"
+    ManagedBy = "terraform"
+    project   = "fintech"
+  }
+}
+
+variable "env_name" {
+  type = string
 }
 
 variable "cni_role_arn" {

@@ -65,16 +65,16 @@ resource "kubernetes_namespace" "prometheus-namespace" {
 module "prometheus_role" {
   source = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
 
-  role_name                                        = "${var.env_name}_prometheus"
-  attach_amazon_managed_service_prometheus_policy  = true
-  amazon_managed_service_prometheus_workspace_arns = [module.prometheus.workspace_arn]
+  # role_name                                        = "${var.env_name}_prometheus"
+  # attach_amazon_managed_service_prometheus_policy  = true
+  # amazon_managed_service_prometheus_workspace_arns = [module.prometheus.workspace_arn]
 
-  oidc_providers = {
-    main = {
-      provider_arn               = var.oidc_provider_arn
-      namespace_service_accounts = ["${kubernetes_namespace.prometheus-namespace.metadata[0].name}:amp-iamproxy-ingest-role"]
-    }
-  }
+  # oidc_providers = {
+  #   main = {
+  #     provider_arn               = var.oidc_provider_arn
+  #     namespace_service_accounts = ["${kubernetes_namespace.prometheus-namespace.metadata[0].name}:amp-iamproxy-ingest-role"]
+  #   }
+  # }
 
 }
 
