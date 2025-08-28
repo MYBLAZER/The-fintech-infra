@@ -2,7 +2,7 @@
 # General Variables from root module
 ################################################################################
 variable "cluster_name" {
-  type    = string
+  type = string
 }
 
 ################################################################################
@@ -22,7 +22,7 @@ variable "private_subnets" {
 variable "security_group_ids" {
   description = "Addtional Security Groups for EKS control plane"
   type        = list(any)
-} 
+}
 ################################################################################
 # Variables defined using Environment Variables
 ################################################################################
@@ -31,3 +31,8 @@ variable "rolearn" {
   description = "Add admin role to the aws-auth configmap"
 }
 
+variable "cni_role_arn" {
+  description = "IAM role ARN for the AWS VPC CNI to use for creating ENIs"
+  type        = string
+
+}
