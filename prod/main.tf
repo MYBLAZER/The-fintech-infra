@@ -238,3 +238,8 @@ module "maven-sonarqube-server" {
 # }
 
 
+# 🧹 To Remove the Service
+# sudo systemctl stop github-runner.service
+# sudo systemctl disable github-runner.service
+# sudo rm /etc/systemd/system/github-runner.service
+# sudo systemctl daemon-reload

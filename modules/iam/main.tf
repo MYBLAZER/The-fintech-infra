@@ -37,7 +37,7 @@ resource "aws_iam_openid_connect_provider" "github_oidc" {
   client_id_list = ["sts.amazonaws.com"]
 
   thumbprint_list = [
-    "6938fd4d98bab03faadb97b34396831e3780aea1"
+    "6938fd4d98bab03faadb97b34396831e3780aea1" # ✅ GitHub's official OIDC thumbprint
   ]
 }
 
@@ -49,8 +49,8 @@ resource "aws_iam_policy" "github_ecr_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Action = "ecr:GetAuthorizationToken"
+        Effect   = "Allow"
+        Action   = "ecr:GetAuthorizationToken"
         Resource = "*"
       },
       {
@@ -77,8 +77,8 @@ resource "aws_iam_policy" "github_ecr_policy" {
         Resource = "arn:aws:ecr:${var.aws_region}:${var.aws_account_id}:*"
       },
       {
-        Effect = "Allow"
-        Action = "sts:TagSession"
+        Effect   = "Allow"
+        Action   = "sts:TagSession"
         Resource = "*"
       }
     ]
@@ -88,7 +88,6 @@ resource "aws_iam_policy" "github_ecr_policy" {
 resource "aws_iam_policy" "github_eks_policy" {
   name        = "${var.environment}-GitHubEKSPolicy"
   description = "Permissions for GitHub Actions to deploy to EKS"
-
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
