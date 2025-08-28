@@ -217,6 +217,5 @@ resource "kubernetes_namespace" "fintech_dev" {
       app = "fintech-dev"
     }
   }
-
   depends_on = [module.eks]
 }
