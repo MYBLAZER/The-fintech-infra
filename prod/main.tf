@@ -12,12 +12,11 @@ module "vpc" {
 # ################################################################################
 
 module "eks" {
-  source = "./../modules/eks-cluster"
+  source = "./modules/eks-cluster"
 
   cluster_name = var.cluster_name
   rolearn      = var.rolearn
   cni_role_arn = module.iam.cni_role_arn
-
   security_group_ids = [module.eks-client-node.eks_client_sg]
   vpc_id             = module.vpc.vpc_id
   private_subnets    = module.vpc.private_subnets
@@ -35,7 +34,7 @@ module "eks" {
 # ################################################################################
 
 module "aws_alb_controller" {
-  source = "./../modules/aws-alb-controller"
+  source = "./modules/aws-alb-controller"
 
   main_region       = var.main_region
   cluster_name      = var.cluster_name
@@ -48,7 +47,7 @@ module "aws_alb_controller" {
 
 
 module "eks-client-node" {
-  source                 = "./../modules/eks-client-node"
+  source                 = "./modules/eks-client-node"
   ami_id                 = local.final_ami_id
   instance_type          = var.instance_type
   aws_region             = var.main_region
@@ -122,7 +121,7 @@ EOF
 
 
 module "acm" {
-  source          = "./../modules/acm"
+  source          = "./modules/acm"
   domain_name     = var.domain_name
   san_domains     = var.san_domains
   route53_zone_id = var.route53_zone_id
@@ -131,14 +130,14 @@ module "acm" {
 
 
 module "ecr" {
-  source         = "./../modules/ecr"
+  source         = "./modules/ecr"
   aws_account_id = var.aws_account_id
   repositories   = var.repositories
   tags           = local.common_tags
 }
 
 module "iam" {
-  source            = "./../modules/iam"
+  source            = "./modules/iam"
   environment       = var.env_name
   aws_region        = var.aws_region
   aws_account_id    = var.aws_account_id
@@ -164,7 +163,7 @@ module "iam" {
 
 
 module "github-self-hosted-runner" {
-  source            = "./../modules/github-self-hosted-runner"
+  source            = "./modules/github-self-hosted-runner"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name
@@ -175,7 +174,7 @@ module "github-self-hosted-runner" {
 }
 
 module "maven-sonarqube-server" {
-  source            = "./../modules/maven-sonarqube-server"
+  source            = "./modules/maven-sonarqube-server"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name

@@ -37,7 +37,7 @@ module "aws_alb_controller" {
 
 
 module "eks-client-node" {
-  source                 = "./../modules/eks-client-node"
+  source                 = "./modules/eks-client-node"
   ami_id                 = local.final_ami_id
   instance_type          = var.instance_type
   aws_region             = var.main-region
@@ -102,7 +102,7 @@ module "eks-client-node" {
 
 
 module "acm" {
-  source          = "./../modules/acm"
+  source          = "./modules/acm"
   domain_name     = var.domain_name
   san_domains     = var.san_domains
   route53_zone_id = var.route53_zone_id
@@ -111,7 +111,7 @@ module "acm" {
 
 
 module "ecr" {
-  source         = "./../modules/ecr"
+  source         = "./modules/ecr"
   aws_account_id = var.aws_account_id
   repositories   = var.repositories
   tags           = local.common_tags
@@ -129,7 +129,7 @@ module "iam" {
 # EKS TOOLS
 ##############################################
 module "jenkins-server" {
-  source            = "./../modules/jenkins-server"
+  source            = "./modules/jenkins-server"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name
@@ -140,7 +140,7 @@ module "jenkins-server" {
 
 
 module "terraform-node" {
-  source            = "./../modules/terraform-node"
+  source            = "./modules/terraform-node"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name
@@ -150,7 +150,7 @@ module "terraform-node" {
 }
 
 module "maven-sonarqube-server" {
-  source            = "./../modules/maven-sonarqube-server"
+  source            = "./modules/maven-sonarqube-server"
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name

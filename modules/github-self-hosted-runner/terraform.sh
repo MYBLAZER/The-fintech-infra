@@ -31,7 +31,6 @@ sudo apt-get install terraform -y
 curl -O https://s3.us-east-1.amazonaws.com/amazon-eks/1.32.3/2025-08-26/bin/linux/amd64/kubectl
 
 
-
 ### Docker cleanup & install
 echo "Removing older Docker versions if installed..."
 sudo apt-get remove -y docker docker-engine docker.io containerd runc || true
