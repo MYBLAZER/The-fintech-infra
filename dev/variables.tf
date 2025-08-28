@@ -20,7 +20,7 @@ variable "cluster_name" {
 
 variable "rolearn" {
   description = "Add admin role to the aws-auth configmap"
-  default     = "arn:aws:iam::999568710647:role/terraform-create-role"
+  default     = "arn:aws:iam::514670561567:user/Azwe"
 }
 
 # ################################################################################
@@ -67,19 +67,19 @@ variable "key_name" {
 variable "domain_name" {
   description = "Primary domain name for the certificate"
   type        = string
-  default     = "dominionsystem.org"
+  default     = "azwetech01.org"
 }
 
 variable "san_domains" {
   description = "Subject alternative names for the certificate"
   type        = list(string)
-  default     = ["*.dominionsystem.org"]
+  default     = ["*.azwetech01.org"]
 }
 
 variable "route53_zone_id" {
   description = "Route 53 Hosted Zone ID"
   type        = string
-  default     = "Z05475331ZK00RPD27RX0" # Replace with actual Route 53 Zone ID
+  default     = "Z00683193FQOUKHUO2A3J" # Replace with actual Route 53 Zone ID
 }
 
 
@@ -87,7 +87,7 @@ variable "route53_zone_id" {
 
 variable "aws_account_id" {
   description = "AWS Account ID"
-  default     = "999568710647"
+  default     = "514670561567"
 }
 
 variable "repositories" {
@@ -174,5 +174,4 @@ variable "namespaces" {
 #   sensitive   = true
 #   default     = "b4f8f4f8-e011-7046-0637-993dc10edd76"
 # }
-
 
