@@ -4,7 +4,7 @@
 
 module "vpc" {
   source      = "./../modules/vpc"
-  main-region = var.main-region
+  main_region = var.main-region
 }
 
 # ################################################################################
