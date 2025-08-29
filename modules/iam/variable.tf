@@ -31,11 +31,11 @@ variable "eks_oidc_provider" {
   type        = string
 }
 
-variable "tags" {
-  description = "Common tags for the cluster resources"
-  type        = map(string)
-  default = {
-    terraform = "true"
-  }
-}
+# variable "tags" {
+ # description = "Common tags for the cluster resources"
+  # type        = map(string)
+  # default = {
+   # terraform = "true"
+  # }
+# }
 
