@@ -129,13 +129,13 @@ module "eks" {
 
   tags = local.common_tags
 }
-locals {
-  common_tags = {
-    Environment = "dev"
-    Project     = "fintech"
-    Owner       = "azwe"
-  }
-}
+#locals {
+ # common_tags = {
+  #  Environment = "dev"
+   # Project     = "fintech"
+    #Owner       = "azwe"
+  #}
+#}
 ##############################################
 # RBAC Bindings with depends_on
 ##############################################
