@@ -138,3 +138,16 @@ variable "namespaces" {
     }
   }
 }
+variable "main-region" {
+  description = "Primary AWS region for resources"
+  type        = string
+  default     = "us-east-2"
+
+}
+
+variable "main_region" {
+  description = "Primary AWS region for resources"
+  type        = string
+  default     = "us-east-2"
+
+}
