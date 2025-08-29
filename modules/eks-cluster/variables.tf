@@ -52,8 +52,8 @@ variable "env_name" {
   type = string
 }
 
-variable "cni_role_arn" {
-  description = "IAM role ARN for the AWS VPC CNI to use for creating ENIs"
-  type        = string
+#variable "cni_role_arn" {
+ # description = "IAM role ARN for the AWS VPC CNI to use for creating ENIs"
+  #type        = string
 
-}
+#}
