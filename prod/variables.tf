@@ -16,7 +16,7 @@ variable "aws_region" {
 
 variable "rolearn" {
   description = "Add admin role to the aws-auth configmap"
-  default     = "arn:aws:iam::514670561567:user/terraform-create-role"
+  default     = "arn:aws:iam::514670561567:user/azwe"
 }
 
 ################################################################################
@@ -48,11 +48,11 @@ variable "cluster_name" {
   default     = "prod-dominion-cluster"
 }
 
-# variable "rolearn" {
-#   description = "IAM role ARN to be added to the aws-auth configmap as admin"
-#   type        = string
-#   default     = "arn:aws:iam::514670561567:role/terraform-create-role"
-# }
+variable "rolearn" {
+  description = "IAM role ARN to be added to the aws-auth configmap as admin"
+  type        = string
+  default     = "arn:aws:iam::514670561567:role/terraform-create-role"
+}
 
 
 ################################################################################
