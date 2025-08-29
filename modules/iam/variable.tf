@@ -1,9 +1,15 @@
 variable "aws_account_id" {
   description = "AWS Account ID"
-  type        = string
   default     = "514670561567" #999568710647"
 }
 
+variable "tags" {
+  description = "Common tags for the cluster resources"
+  type        = map(string)
+  default = {
+    terraform = "true"
+  }
+}
 variable "aws_region" {
   description = "AWS Region"
   type        = string
@@ -25,10 +31,11 @@ variable "eks_oidc_provider" {
   type        = string
 }
 
-variable "tags" {
-  description = "Common tags for the cluster resources"
-  type        = map(string)
-  default = {
-    terraform = "true"
-  }
-}
+# variable "tags" {
+#   description = "Common tags for the cluster resources"
+#   type        = map(string)
+#   default = {
+#     terraform = "true"
+#   }
+# }
+

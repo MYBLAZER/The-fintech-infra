@@ -14,10 +14,9 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "main_region" {
-  description = "Primary region for VPC and global resources"
-  type        = string
-  default     = "us-east-2"
+variable "rolearn" {
+  description = "Add admin role to the aws-auth configmap"
+  default     = "arn:aws:iam::514670561567:user/azwe"
 }
 
 ################################################################################
@@ -97,7 +96,7 @@ variable "san_domains" {
 variable "route53_zone_id" {
   description = "Route 53 hosted zone ID for domain validation"
   type        = string
-  default     = "Z00683193FQOUKHUO2A3J" #Z05475331ZK00RPD27RX0"
+  default     = "Z00683193FQOUKHUO2A3J" #  #Z05475331ZK00RPD27RX0"  Replace with actual Route 53 Zone ID
 }
 
 ################################################################################
@@ -138,4 +137,17 @@ variable "namespaces" {
       }
     }
   }
+}
+variable "main-region" {
+  description = "Primary AWS region for resources"
+  type        = string
+  default     = "us-east-2"
+
+}
+
+variable "main_region" {
+  description = "Primary AWS region for resources"
+  type        = string
+  default     = "us-east-2"
+
 }

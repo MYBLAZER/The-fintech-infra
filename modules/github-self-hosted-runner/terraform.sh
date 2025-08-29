@@ -28,10 +28,7 @@ sudo apt update -y
 sudo apt-get install terraform -y
 
 #Installing kubectl client
-curl -O https://s3.us-east-1.amazonaws.com/amazon-eks/1.32.3/2025-08-26/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH 
-
+curl -O https://s3.us-east-1.amazonaws.com/amazon-eks/1.27.12/2024-04-19/bin/linux/amd64/kubectl
 
 ### Docker cleanup & install
 echo "Removing older Docker versions if installed..."

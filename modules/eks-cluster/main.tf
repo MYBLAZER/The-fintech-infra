@@ -26,9 +26,8 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
 
-  cluster_name    = var.cluster_name
-  cluster_version = "1.32"
-
+  cluster_name                             = var.cluster_name
+  cluster_version                          = "1.32"
   enable_cluster_creator_admin_permissions = true
   cluster_endpoint_public_access           = true
 
@@ -42,7 +41,7 @@ module "eks" {
   cluster_additional_security_group_ids = var.security_group_ids
 
   # ✅ Enable CloudWatch logging
-  create_cloudwatch_log_group = true
+  create_cloudwatch_log_group = false
   cluster_enabled_log_types   = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
   ##############################################
@@ -105,7 +104,7 @@ module "eks" {
   # Access entries (IAM Identity Center or user/role mapping)
   ##############################################
   access_entries = {
-    fusi = {
+    azwe = {
       kubernetes_groups = ["eks-admins"]
       principal_arn     = "arn:aws:iam::514670561567:user/azwe"
       policy_associations = [
@@ -130,7 +129,13 @@ module "eks" {
 
   tags = local.common_tags
 }
-
+# locals {
+#   common_tags = {
+#     Environment = "dev"
+#     Project     = "fintech"
+#     Owner       = "azwe"
+#   }
+# }
 ##############################################
 # RBAC Bindings with depends_on
 ##############################################
