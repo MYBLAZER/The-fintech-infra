@@ -16,7 +16,7 @@ variable "aws_region" {
 
 variable "rolearn" {
   description = "Add admin role to the aws-auth configmap"
-  default     = "arn:aws:iam::514670561567:user/Azwe"
+  default     = "arn:aws:iam::514670561567:user/terraform-create-role"
 }
 
 ################################################################################
