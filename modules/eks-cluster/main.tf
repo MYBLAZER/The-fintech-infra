@@ -41,7 +41,7 @@ module "eks" {
   cluster_additional_security_group_ids = var.security_group_ids
 
   # ✅ Enable CloudWatch logging
-  create_cloudwatch_log_group = true
+  create_cloudwatch_log_group = false
   cluster_enabled_log_types   = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
   ##############################################
