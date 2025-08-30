@@ -154,3 +154,33 @@ resource "aws_iam_role_policy_attachment" "cni_policy_attachment" {
 }
 
 
+resource "aws_iam_role" "eks_admin" {
+  name = "EKSAdminRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::514670561567:user/azwe" # allow your IAM user to assume this role
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+resource "aws_iam_role_policy_attachment" "eks_admin_attachment" {
+  role       = aws_iam_role.eks_admin.name
+  policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+}
+
+# resource "aws_iam_role_policy_attachment" "eks_admin_policy" {
+#   role       = aws_iam_role.eks_admin.name
+#   policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+# }
+
+
+output "cni_role_arn" {
+  value = aws_iam_role.cni_role.arn
+}
