@@ -14,9 +14,10 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "rolearn" {
-  description = "Add admin role to the aws-auth configmap"
-  default     = "arn:aws:iam::514670561567:user/Azwe"
+variable "main_region" {
+  description = "Primary region for VPC and global resources"
+  type        = string
+  default     = "us-east-2"
 }
 
 ################################################################################
@@ -48,11 +49,11 @@ variable "cluster_name" {
   default     = "prod-dominion-cluster"
 }
 
-# variable "rolearn" {
-#   description = "IAM role ARN to be added to the aws-auth configmap as admin"
-#   type        = string
-#   default     = "arn:aws:iam::514670561567:role/terraform-create-role"
-# }
+variable "rolearn" {
+  description = "IAM role ARN to be added to the aws-auth configmap as admin"
+  type        = string
+  default     = "arn:aws:iam::514670561567:role/terraform-create-role"
+}
 
 
 ################################################################################
@@ -137,17 +138,4 @@ variable "namespaces" {
       }
     }
   }
-}
-variable "main-region" {
-  description = "Primary AWS region for resources"
-  type        = string
-  default     = "us-east-2"
-
-}
-
-variable "main_region" {
-  description = "Primary AWS region for resources"
-  type        = string
-  default     = "us-east-2"
-
 }
