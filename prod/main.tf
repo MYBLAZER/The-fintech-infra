@@ -251,7 +251,7 @@ module "eks_admin_role" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = ">= 4.64.0" # match your version
+  version = ">= 1.5.7" # match your version
 
   # ... your other configs ...
 
