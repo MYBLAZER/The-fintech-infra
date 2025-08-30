@@ -11,7 +11,7 @@ module "vpc" {
 # # EKS Cluster Module
 # ################################################################################
 
-module "eks" {
+module "eks-cluster" {
   source = "./../modules/eks-cluster"
 
   cluster_name       = var.cluster_name
@@ -251,7 +251,7 @@ module "eks_admin_role" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = ">= 20.0" # match your version
+  version = ">= 4.64.0" # match your version
 
   # ... your other configs ...
 
