@@ -28,3 +28,6 @@ resource "aws_iam_role_policy_attachment" "eks_admin_attach" {
 output "eks_admin_role_arn" {
   value = aws_iam_role.eks_admin.arn
 }
+
+
+

@@ -259,25 +259,25 @@ module "eks" {
     azwe = {
       kubernetes_groups = ["eks-admins"]
       principal_arn     = module.eks_admin_role.eks_admin_role_arn
-      policy_associations = [
-        {
+      policy_associations = {
+        admin = {
           policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
           access_scope = { type = "cluster" }
         }
-      ]
+      }
     }
 
     github_runner = {
       kubernetes_groups = ["eks-admins"]
       principal_arn     = "arn:aws:iam::514670561567:role/github-runner-ssm-role"
-      policy_associations = [
-        {
+      policy_associations = {
+        admin = {
           policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
           access_scope = { type = "cluster" }
         }
-      ]
+      }
     }
   }
 
-  tags = local.common_tags
+  # ... your other configs ...
 }
