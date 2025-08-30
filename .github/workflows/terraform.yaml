@@ -45,7 +45,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: "1.13.1 "
+          terraform_version: "1.50.7 "
 
       - name: Verify working directory
         run: |
@@ -87,7 +87,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: "1.13.1 "
+          terraform_version: "1.50.7 "
 
       - name: Terraform init
         working-directory: ${{ env.TF_DIR }}
