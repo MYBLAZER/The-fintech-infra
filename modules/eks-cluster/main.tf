@@ -29,11 +29,11 @@ module "eks" {
   cluster_name    = var.cluster_name
   cluster_version = "1.32"
 
-  enable_cluster_creator_admin_permissions = true
-  cluster_endpoint_public_access           = true
+  #enable_cluster_creator_admin_permissions = true
+  cluster_endpoint_public_access = true
 
   # ✅ Let Terraform manage add-ons
-  bootstrap_self_managed_addons = true
+  #bootstrap_self_managed_addons = true
 
   vpc_id                   = var.vpc_id
   subnet_ids               = var.private_subnets
