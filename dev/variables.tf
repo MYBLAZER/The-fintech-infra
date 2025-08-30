@@ -138,7 +138,7 @@ variable "namespaces" {
     }
   }
 }
-variable "main-region" {
+variable "main_region" {
   description = "Primary AWS region for resources"
   type        = string
   default     = "us-east-2"

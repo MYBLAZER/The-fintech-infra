@@ -37,7 +37,7 @@ resource "aws_iam_openid_connect_provider" "github_oidc" {
   client_id_list = ["sts.amazonaws.com"]
 
   thumbprint_list = [
-    "6938fd4d98bab03faadb97b34396831e3780aea1" # ✅ GitHub's official OIDC thumbprint
+    "6938fd4d98bab03faadb97b34396831e3780aea1"
   ]
 }
 
@@ -88,6 +88,7 @@ resource "aws_iam_policy" "github_ecr_policy" {
 resource "aws_iam_policy" "github_eks_policy" {
   name        = "${var.environment}-GitHubEKSPolicy"
   description = "Permissions for GitHub Actions to deploy to EKS"
+
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -153,5 +154,33 @@ resource "aws_iam_role_policy_attachment" "cni_policy_attachment" {
 }
 
 
+resource "aws_iam_role" "eks_admin" {
+  name = "EKSAdminRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::514670561567:user/azwe" # allow your IAM user to assume this role
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+resource "aws_iam_role_policy_attachment" "eks_admin_attachment" {
+  role       = aws_iam_role.eks_admin.name
+  policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+}
+
+# resource "aws_iam_role_policy_attachment" "eks_admin_policy" {
+#   role       = aws_iam_role.eks_admin.name
+#   policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+# }
 
 
+output "cni_role_arn" {
+  value = aws_iam_role.cni_role.arn
+}

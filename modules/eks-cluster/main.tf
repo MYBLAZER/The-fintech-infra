@@ -24,15 +24,16 @@ provider "kubernetes" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0"
+  version = "19.15.3"
 
-  cluster_name                             = var.cluster_name
-  cluster_version                          = "1.32"
-  enable_cluster_creator_admin_permissions = true
-  cluster_endpoint_public_access           = true
+  cluster_name    = var.cluster_name
+  cluster_version = "1.32"
+
+  #enable_cluster_creator_admin_permissions = true
+  cluster_endpoint_public_access = true
 
   # ✅ Let Terraform manage add-ons
-  bootstrap_self_managed_addons = true
+  #bootstrap_self_managed_addons = true
 
   vpc_id                   = var.vpc_id
   subnet_ids               = var.private_subnets
@@ -41,7 +42,7 @@ module "eks" {
   cluster_additional_security_group_ids = var.security_group_ids
 
   # ✅ Enable CloudWatch logging
-  create_cloudwatch_log_group = false
+  create_cloudwatch_log_group = true
   cluster_enabled_log_types   = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
   ##############################################
@@ -103,39 +104,34 @@ module "eks" {
   ##############################################
   # Access entries (IAM Identity Center or user/role mapping)
   ##############################################
-  access_entries = {
-    azwe = {
-      kubernetes_groups = ["eks-admins"]
-      principal_arn     = "arn:aws:iam::514670561567:user/azwe"
-      policy_associations = [
-        {
-          policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-          access_scope = { type = "cluster" }
-        }
-      ]
-    }
+  # access_entries = {
+  #   fusi = {
+  #     kubernetes_groups = ["eks-admins"]
+  #     principal_arn     = "arn:aws:iam::999568710647:user/nfusi" arn:aws:iam::514670561567:role/EKSAdminRole
 
-    github_runner = {
-      kubernetes_groups = ["eks-admins"]
-      principal_arn     = "arn:aws:iam::514670561567:role/github-runner-ssm-role"
-      policy_associations = [
-        {
-          policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-          access_scope = { type = "cluster" }
-        }
-      ]
-    }
-  }
+  #     policy_associations = [
+  #       {
+  #         policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  #         access_scope = { type = "cluster" }
+  #       }
+  #     ]
+  #   }
 
-  tags = local.common_tags
+  #   github_runner = {
+  #     kubernetes_groups = ["eks-admins"]
+  #     principal_arn     = "arn:aws:iam::514670561567:role/github-runner-ssm-role"
+  #     policy_associations = [
+  #       {
+  #         policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  #         access_scope = { type = "cluster" }
+  #       }
+  #     ]
+  #   }
+  # }
+
+  # tags = local.common_tags
 }
-# locals {
-#   common_tags = {
-#     Environment = "dev"
-#     Project     = "fintech"
-#     Owner       = "azwe"
-#   }
-# }
+
 ##############################################
 # RBAC Bindings with depends_on
 ##############################################
@@ -222,5 +218,6 @@ resource "kubernetes_namespace" "fintech_dev" {
       app = "fintech-dev"
     }
   }
+
   depends_on = [module.eks]
 }

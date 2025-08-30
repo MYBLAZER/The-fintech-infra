@@ -4,14 +4,14 @@
 
 module "vpc" {
   source      = "./../modules/vpc"
-  main_region = var.main-region
+  main_region = var.main_region
 }
 
 # ################################################################################
 # # EKS Cluster Module
 # ################################################################################
 
-module "eks" {
+module "eks-cluster" {
   source = "./../modules/eks-cluster"
 
   cluster_name       = var.cluster_name
@@ -151,15 +151,15 @@ module "iam" {
 ##############################################
 # EKS TOOLS
 ##############################################
-# module "jenkins-server" {
-#   source            = "./../modules/jenkins-server"
-#   ami_id            = local.final_ami_id
-#   instance_type     = var.instance_type
-#   key_name          = var.key_name
-#   main_region       = var.main_region
-#   security_group_id = module.eks-client-node.eks_client_sg
-#   subnet_id         = module.vpc.public_subnets[0]
-# }
+module "jenkins-server" {
+  source            = "./../modules/jenkins-server"
+  ami_id            = local.final_ami_id
+  instance_type     = var.instance_type
+  key_name          = var.key_name
+  main_region       = var.main_region
+  security_group_id = module.eks-client-node.eks_client_sg
+  subnet_id         = module.vpc.public_subnets[0]
+}
 
 
 module "github-self-hosted-runner" {
@@ -167,7 +167,7 @@ module "github-self-hosted-runner" {
   ami_id            = local.final_ami_id
   instance_type     = var.instance_type
   key_name          = var.key_name
-  main_region       = var.main-region
+  main_region       = var.main_region
   security_group_id = module.eks-client-node.eks_client_sg
   subnet_id         = module.vpc.public_subnets[0]
   cluster_name      = module.eks.cluster_name
@@ -180,8 +180,8 @@ module "maven-sonarqube-server" {
   key_name          = var.key_name
   security_group_id = module.eks-client-node.eks_client_sg
   subnet_id         = module.vpc.public_subnets[0]
-  # main_region   = var.main_region
-
+  main_region       = var.main_region
+  #cluster_name      = module.eks.cluster_name
   #   db_name              = var.db_name
   #   db_username          = var.db_username
   #   db_password          = var.db_password
@@ -242,3 +242,41 @@ module "maven-sonarqube-server" {
 # sudo systemctl disable github-runner.service
 # sudo rm /etc/systemd/system/github-runner.service
 # sudo systemctl daemon-reload
+
+
+module "eks_admin_role" {
+  source   = "../modules/eks_admin_role"
+  user_arn = "arn:aws:iam::514670561567:user/azwe" # 👈 your IAM user ARN
+}
+
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "20.8.4"
+  # ... your other configs ...
+
+  access_entries = {
+    azwe = {
+      kubernetes_groups = ["eks-admins"]
+      principal_arn     = module.eks_admin_role.eks_admin_role_arn
+      policy_associations = {
+        admin = {
+          policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = { type = "cluster" }
+        }
+      }
+    }
+
+    github_runner = {
+      kubernetes_groups = ["eks-admins"]
+      principal_arn     = "arn:aws:iam::514670561567:role/github-runner-ssm-role"
+      policy_associations = {
+        admin = {
+          policy_arn   = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = { type = "cluster" }
+        }
+      }
+    }
+  }
+
+  # ... your other configs ...
+}
